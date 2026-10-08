@@ -29,7 +29,7 @@
 
     <link
         rel="preconnect"
-        href="https://fonts.gstatic.com"
+        href="https://fonts.googleapis.com"
         crossorigin
     >
 
@@ -97,6 +97,16 @@
             color: #fff;
         }
 
+        .botao-editar {
+            background: #111;
+            color: #fff;
+        }
+
+        .botao-adicionar {
+            background: #f2c300;
+            color: #111;
+        }
+
         .resumo-painel {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -132,9 +142,17 @@
             box-shadow: 0 4px 18px rgba(0,0,0,0.08);
         }
 
-        .secao-painel h2 {
-            margin-top: 0;
+        .topo-secao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
             margin-bottom: 20px;
+        }
+
+        .topo-secao h2 {
+            margin: 0;
         }
 
         .tabela-container {
@@ -166,12 +184,46 @@
             font-size: 14px;
         }
 
-        .status-select {
+        .status-select,
+        .campo-produto {
             border: 1px solid #ddd;
             border-radius: 7px;
-            padding: 8px;
+            padding: 9px 10px;
             background: #fff;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .campo-produto:focus,
+        .status-select:focus {
+            outline: 2px solid #f2c300;
+            border-color: #f2c300;
+        }
+
+        .form-produto {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 25px;
+        }
+
+        .campo-grupo {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .campo-grupo label {
             font-size: 13px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .acoes-produto {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
         }
 
         .botao-status {
@@ -180,316 +232,7 @@
             color: #111;
             border-radius: 7px;
             padding: 8px 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .botao-status:hover {
-            opacity: 0.85;
-        }
-
-        .pedido-status-acoes {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            flex-wrap: wrap;
-        }
-
-        .mensagem-painel {
-            padding: 15px 18px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-            font-weight: 600;
-        }
-
-        .mensagem-painel.visivel {
-            display: block;
-        }
-
-        .mensagem-erro {
-            background: #ffe1e1;
-            color: #9b1c1c;
-        }
-
-        .mensagem-sucesso {
-            background: #e4f7e8;
-            color: #176b2c;
-        }
-
-        .vazio-painel {
-            text-align: center;
-            padding: 35px 20px;
-            color: #777;
-        }
-
-        .carregando {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-        }
-
-        @media (max-width: 900px) {
-
-            .resumo-painel {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-        }
-
-        @media (max-width: 600px) {
-
-            .painel-admin {
-                padding-top: 30px;
-            }
-
-            .resumo-painel {
-                grid-template-columns: 1fr;
-            }
-
-            .secao-painel {
-                padding: 18px;
-            }
-
-            .cabecalho-painel {
-                align-items: flex-start;
-            }
-
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-    <header class="topo">
-
-        <div class="container">
-
-            <a
-                href="../index.html"
-                class="logo"
-            >
-                Metal Parts
-            </a>
-
-
-            <nav
-                class="menu"
-                aria-label="Navegação principal"
-            >
-
-                <a href="../index.html">
-                    Início
-                </a>
-
-                <a href="catalogo.html">
-                    Catálogo
-                </a>
-
-                <a href="pedido.html">
-                    Fazer Pedido
-                </a>
-
-                <a
-                    href="painel.html"
-                    class="ativo"
-                >
-                    Painel
-                </a>
-
-            </nav>
-
-        </div>
-
-    </header>
-
-
-    <main class="painel-admin">
-
-        <div class="container">
-
-
-            <div class="cabecalho-painel">
-
-                <div>
-
-                    <span class="subtitulo">
-                        ADMINISTRAÇÃO
-                    </span>
-
-                    <h1>
-                        Painel da Metal Parts
-                    </h1>
-
-                    <p>
-                        Gerencie os pedidos recebidos pela Metal Parts.
-                    </p>
-
-                </div>
-
-
-                <div class="acoes-painel">
-
-                    <button
-                        type="button"
-                        class="botao-painel botao-atualizar"
-                        id="btnAtualizar"
-                    >
-                        Atualizar
-                    </button>
-
-                    <button
-                        type="button"
-                        class="botao-painel botao-sair"
-                        id="btnSair"
-                    >
-                        Sair
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="mensagemPainel"
-                class="mensagem-painel"
-            ></div>
-
-
-            <section class="resumo-painel">
-
-                <div class="card-resumo">
-
-                    <span>
-                        Total de pedidos
-                    </span>
-
-                    <strong id="totalPedidos">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="card-resumo">
-
-                    <span>
-                        Pedidos novos
-                    </span>
-
-                    <strong id="pedidosNovos">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="card-resumo">
-
-                    <span>
-                        Em andamento
-                    </span>
-
-                    <strong id="pedidosAndamento">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="card-resumo">
-
-                    <span>
-                        Concluídos
-                    </span>
-
-                    <strong id="pedidosConcluidos">
-                        0
-                    </strong>
-
-                </div>
-
-            </section>
-
-
-            <section class="secao-painel">
-
-                <h2>
-                    Pedidos recebidos
-                </h2>
-
-
-                <div
-                    id="pedidosContainer"
-                    class="tabela-container"
-                >
-
-                    <div class="carregando">
-                        Carregando pedidos...
-                    </div>
-
-                </div>
-
-            </section>
-
-
-        </div>
-
-    </main>
-
-
-    <footer>
-
-        <div class="container">
-
-            <p>
-                © 2026 Metal Parts.
-                Todos os direitos reservados.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="../supabase/config.js"></script>
-
-
-    <script>
-
-        const pedidosContainer =
-            document.getElementById("pedidosContainer");
-
-        const totalPedidos =
-            document.getElementById("totalPedidos");
-
-        const pedidosNovos =
-            document.getElementById("pedidosNovos");
-
-        const pedidosAndamento =
-            document.getElementById("pedidosAndamento");
-
-        const pedidosConcluidos =
-            document.getElementById("pedidosConcluidos");
-
-        const mensagemPainel =
-            document.getElementById("mensagemPainel");
-
-        const btnAtualizar =
-            document.getElementById("btnAtualizar");
-
-        const btnSair =
-            document.getElementById("btnSair");
-
-
-        let pedidos = [];
+                   let pedidos = [];
 
         let produtos = [];
 
