@@ -41,110 +41,119 @@
     <style>
 
         .painel-admin {
-            padding: 50px 0 80px;
-            min-height: 70vh;
+            min-height: 75vh;
+            padding: 45px 0 80px;
         }
 
-        .cabecalho-painel {
+        .painel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 20px;
-            flex-wrap: wrap;
             margin-bottom: 35px;
+            flex-wrap: wrap;
         }
 
-        .cabecalho-painel h1 {
-            margin-bottom: 8px;
+        .painel-header h1 {
+            margin: 0 0 8px;
         }
 
-        .cabecalho-painel p {
+        .painel-header p {
             margin: 0;
         }
 
-        .acoes-painel {
+        .acoes-topo {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
 
-        .botao-painel {
+        .btn {
             border: none;
-            cursor: pointer;
-            padding: 12px 18px;
             border-radius: 8px;
+            padding: 12px 18px;
+            cursor: pointer;
             font-weight: 700;
-            font-size: 14px;
             transition: 0.2s;
         }
 
-        .botao-painel:hover {
+        .btn:hover {
             transform: translateY(-1px);
         }
 
-        .botao-atualizar {
+        .btn-amarelo {
             background: #f2c300;
             color: #111;
         }
 
-        .botao-sair {
+        .btn-preto {
             background: #111;
             color: #fff;
         }
 
-        .botao-excluir {
+        .btn-vermelho {
             background: #c62828;
             color: #fff;
         }
 
-        .botao-editar {
-            background: #111;
-            color: #fff;
-        }
-
-        .botao-adicionar {
-            background: #f2c300;
-            color: #111;
-        }
-
-        .botao-cancelar {
-            background: #777;
-            color: #fff;
-        }
-
-        .resumo-painel {
+        .menu-painel {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 18px;
-            margin-bottom: 35px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        .card-resumo {
+        .menu-card {
             background: #fff;
-            border-radius: 12px;
-            padding: 22px;
+            border: none;
+            border-radius: 14px;
+            padding: 30px;
+            text-align: left;
+            cursor: pointer;
             box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-            border-left: 5px solid #f2c300;
+            transition: 0.2s;
         }
 
-        .card-resumo span {
-            display: block;
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 8px;
+        .menu-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 22px rgba(0,0,0,0.12);
         }
 
-        .card-resumo strong {
-            font-size: 28px;
+        .menu-card h2 {
+            margin: 0 0 8px;
+            font-size: 20px;
             color: #111;
+        }
+
+        .menu-card p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .icone-menu {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f2c300;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 22px;
         }
 
         .secao-painel {
+            display: none;
             background: #fff;
             border-radius: 14px;
             padding: 25px;
             margin-bottom: 30px;
             box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        .secao-painel.ativa {
+            display: block;
         }
 
         .topo-secao {
@@ -153,57 +162,48 @@
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .topo-secao h2 {
+            margin: 0 0 6px;
+        }
+
+        .topo-secao p {
             margin: 0;
+            color: #666;
         }
 
-        .tabela-container {
-            width: 100%;
-            overflow-x: auto;
+        .btn-voltar {
+            background: #eee;
+            color: #111;
         }
 
-        .tabela-painel {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 750px;
+        .resumo-painel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .tabela-painel th,
-        .tabela-painel td {
-            padding: 14px 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            vertical-align: middle;
-        }
-
-        .tabela-painel th {
-            background: #111;
-            color: #fff;
-            font-size: 13px;
-        }
-
-        .tabela-painel td {
-            font-size: 14px;
-        }
-
-        .status-select,
-        .campo-produto {
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            padding: 9px 10px;
+        .card-resumo {
             background: #fff;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            border-left: 5px solid #f2c300;
         }
 
-        .campo-produto:focus,
-        .status-select:focus {
-            outline: 2px solid #f2c300;
-            border-color: #f2c300;
+        .card-resumo span {
+            display: block;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .card-resumo strong {
+            font-size: 27px;
+            color: #111;
         }
 
         .form-produto {
@@ -223,7 +223,20 @@
         .campo-grupo label {
             font-size: 13px;
             font-weight: 700;
-            color: #333;
+        }
+
+        .campo {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .campo:focus {
+            outline: 2px solid #f2c300;
+            border-color: #f2c300;
         }
 
         .acoes-produto {
@@ -232,60 +245,73 @@
             flex-wrap: wrap;
         }
 
-        .botao-status {
-            border: none;
-            background: #f2c300;
-            color: #111;
+        .tabela-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .tabela {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .tabela th,
+        .tabela td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .tabela th {
+            background: #111;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .tabela td {
+            font-size: 14px;
+        }
+
+        .status {
+            padding: 8px;
+            border: 1px solid #ddd;
             border-radius: 7px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-weight: 700;
+            background: #fff;
         }
 
-        .botao-status:hover {
-            opacity: 0.9;
-        }
-
-        .mensagem-painel {
-            padding: 15px;
+        .mensagem {
+            display: none;
+            padding: 13px 15px;
             border-radius: 8px;
             margin-bottom: 20px;
-            display: none;
-            font-size: 14px;
             font-weight: 600;
+            font-size: 14px;
         }
 
-        .mensagem-sucesso {
+        .mensagem.ok {
             display: block;
             background: #e8f5e9;
             color: #2e7d32;
         }
 
-        .mensagem-erro {
+        .mensagem.erro {
             display: block;
             background: #ffebee;
             color: #c62828;
         }
 
-        .sem-registros {
-            text-align: center;
-            padding: 30px;
+        .vazio {
+            text-align: center !important;
+            padding: 30px !important;
             color: #777;
         }
 
-        .produto-editando {
-            border: 2px solid #f2c300;
-            background: #fffdf0;
-        }
-
-        .data-registro {
-            white-space: nowrap;
-        }
-
-        @media (max-width: 1100px) {
+        @media (max-width: 900px) {
 
             .resumo-painel {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .form-produto {
@@ -294,42 +320,22 @@
 
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 650px) {
+
+            .menu-painel {
+                grid-template-columns: 1fr;
+            }
+
+            .resumo-painel {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .form-produto {
+                grid-template-columns: 1fr;
+            }
 
             .painel-admin {
                 padding: 30px 15px 60px;
-            }
-
-            .resumo-painel {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .form-produto {
-                grid-template-columns: 1fr;
-            }
-
-            .secao-painel {
-                padding: 18px;
-            }
-
-            .cabecalho-painel {
-                align-items: flex-start;
-            }
-
-        }
-
-        @media (max-width: 450px) {
-
-            .resumo-painel {
-                grid-template-columns: 1fr;
-            }
-
-            .acoes-painel {
-                width: 100%;
-            }
-
-            .acoes-painel button {
-                flex: 1;
             }
 
         }
@@ -340,112 +346,588 @@
 
 <body>
 
-    <main class="painel-admin">
+<main class="painel-admin">
 
-        <div class="container">
+    <div class="container">
 
-            <div class="cabecalho-painel">
+        <header class="painel-header">
 
-                <div>
-                    <h1>Painel da Metal Parts</h1>
+            <div>
 
-                    <p>
-                        Gerencie os produtos e os pedidos recebidos.
-                    </p>
+                <h1>Painel da Metal Parts</h1>
+
+                <p>
+                    Área administrativa do site.
+                </p>
+
+            </div>
+
+            <div class="acoes-topo">
+
+                <button
+                    type="button"
+                    class="btn btn-amarelo"
+                    onclick="atualizarTudo()"
+                >
+                    ↻ Atualizar
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-preto"
+                    onclick="sair()"
+                >
+                    Sair
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <div
+            id="mensagem"
+            class="mensagem"
+        ></div>
+
+
+        <!-- MENU -->
+
+        <div
+            id="menuPainel"
+            class="menu-painel"
+        >
+
+            <button
+                type="button"
+                class="menu-card"
+                onclick="abrirSecao('produtos')"
+            >
+
+                <div class="icone-menu">
+                    🔧
                 </div>
 
-                <div class="acoes-painel">
+                <h2>Gerenciar produtos</h2>
+
+                <p>
+                    Adicione, edite e exclua produtos do catálogo.
+                </p>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="menu-card"
+                onclick="abrirSecao('pedidos')"
+            >
+
+                <div class="icone-menu">
+                    📦
+                </div>
+
+                <h2>Pedidos recebidos</h2>
+
+                <p>
+                    Veja os pedidos e atualize o status de cada um.
+                </p>
+
+            </button>
+
+        </div>
+
+
+        <!-- PRODUTOS -->
+
+        <section
+            id="secaoProdutos"
+            class="secao-painel"
+        >
+
+            <div class="topo-secao">
+
+                <div>
+
+                    <h2>Gerenciar produtos</h2>
+
+                    <p>
+                        Controle os produtos exibidos no catálogo.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn btn-voltar"
+                    onclick="voltarMenu()"
+                >
+                    ← Voltar
+                </button>
+
+            </div>
+
+
+            <form
+                id="formProduto"
+                class="form-produto"
+                onsubmit="salvarProduto(event)"
+            >
+
+                <div class="campo-grupo">
+
+                    <label for="nomeProduto">
+                        Nome do produto
+                    </label>
+
+                    <input
+                        id="nomeProduto"
+                        class="campo"
+                        type="text"
+                        placeholder="Nome do produto"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo-grupo">
+
+                    <label for="precoProduto">
+                        Preço
+                    </label>
+
+                    <input
+                        id="precoProduto"
+                        class="campo"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0,00"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo-grupo">
+
+                    <label for="categoriaProduto">
+                        Categoria
+                    </label>
+
+                    <input
+                        id="categoriaProduto"
+                        class="campo"
+                        type="text"
+                        placeholder="Categoria"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="acoes-produto">
 
                     <button
-                        type="button"
-                        class="botao-painel botao-atualizar"
-                        onclick="carregarTudo()"
+                        id="botaoProduto"
+                        type="submit"
+                        class="btn btn-amarelo"
                     >
-                        Atualizar
+                        Adicionar
                     </button>
 
                     <button
+                        id="botaoCancelar"
                         type="button"
-                        class="botao-painel botao-sair"
-                        onclick="sair()"
+                        class="btn btn-voltar"
+                        onclick="cancelarEdicao()"
+                        style="display:none;"
                     >
-                        Sair
+                        Cancelar
                     </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="tabela-container">
+
+                <table class="tabela">
+
+                    <thead>
+
+                        <tr>
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Cadastro</th>
+                            <th>Ações</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tabelaProdutos">
+
+                        <tr>
+                            <td
+                                colspan="5"
+                                class="vazio"
+                            >
+                                Carregando produtos...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- PEDIDOS -->
+
+        <section
+            id="secaoPedidos"
+            class="secao-painel"
+        >
+
+            <div class="topo-secao">
+
+                <div>
+
+                    <h2>Pedidos recebidos</h2>
+
+                    <p>
+                        Acompanhe os pedidos feitos pelos clientes.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn btn-voltar"
+                    onclick="voltarMenu()"
+                >
+                    ← Voltar
+                </button>
+
+            </div>
+
+
+            <div class="resumo-painel">
+
+                <div class="card-resumo">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="totalPedidos">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card-resumo">
+
+                    <span>
+                        Novos
+                    </span>
+
+                    <strong id="pedidosNovos">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card-resumo">
+
+                    <span>
+                        Em andamento
+                    </span>
+
+                    <strong id="pedidosAndamento">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card-resumo">
+
+                    <span>
+                        Concluídos
+                    </span>
+
+                    <strong id="pedidosConcluidos">
+                        0
+                    </strong>
 
                 </div>
 
             </div>
 
-            <div
-                id="mensagem"
-                class="mensagem-painel"
-            ></div>
 
-            <section class="resumo-painel">
+            <div class="tabela-container">
 
-                <div class="card-resumo">
-                    <span>Total de produtos</span>
-                    <strong id="totalProdutos">0</strong>
-                </div>
+                <table class="tabela">
 
-                <div class="card-resumo">
-                    <span>Total de pedidos</span>
-                    <strong id="totalPedidos">0</strong>
-                </div>
+                    <thead>
 
-                <div class="card-resumo">
-                    <span>Pedidos novos</span>
-                    <strong id="pedidosNovos">0</strong>
-                </div>
+                        <tr>
 
-                <div class="card-resumo">
-                    <span>Em andamento</span>
-                    <strong id="pedidosAndamento">0</strong>
-                </div>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Peça</th>
+                            <th>Quantidade</th>
+                            <th>Observações</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th>Ação</th>
 
-                <div class="card-resumo">
-                    <span>Concluídos</span>
-                    <strong id="pedidosConcluidos">0</strong>
-                </div>
+                        </tr>
 
-            </section>
+                    </thead>
+
+                    <tbody id="tabelaPedidos">
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="vazio"
+                            >
+                                Carregando pedidos...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
 
 
-            <!-- GERENCIAR PRODUTOS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-            <section class="secao-painel">
+<script src="../supabase/config.js"></script>
 
-                <div class="topo-secao">
 
-                    <div>
-                        <h2>Gerenciar produtos</h2>
+<script>
 
-                        <p>
-                            Adicione, edite ou exclua produtos do catálogo.
-                        </p>
-                    </div>
+    let produtos = [];
+    let pedidos = [];
+    let produtoEditando = null;
 
-                </div>
 
-                <form
-                    id="formProduto"
-                    class="form-produto"
-                    onsubmit="salvarProduto(event)"
-                >
+    /* ==========================
+       MENSAGEM
+    ========================== */
 
-                    <div class="campo-grupo">
+    function mostrarMensagem(texto, erro = false) {
 
-                        <label for="nomeProduto">
-                            Nome do produto
-                        </label>
+        const elemento =
+            document.getElementById("mensagem");
 
-                        <input
-                            type="text"
-                            id="nomeProduto"
-                            class="campo-produto"
-                            placeholder="Ex.: Pastilha de freio"
-                            required
-                        >
+        elemento.textContent = texto;
+
+        elemento.className =
+            erro
+                ? "mensagem erro"
+                : "mensagem ok";
+
+        setTimeout(() => {
+
+            elemento.className = "mensagem";
+
+            elemento.textContent = "";
+
+        }, 4000);
+
+    }
+
+
+    /* ==========================
+       MENU
+    ========================== */
+
+    function abrirSecao(secao) {
+
+        document
+            .getElementById("menuPainel")
+            .style.display = "none";
+
+
+        document
+            .getElementById("secaoProdutos")
+            .classList.remove("ativa");
+
+
+        document
+            .getElementById("secaoPedidos")
+            .classList.remove("ativa");
+
+
+        if (secao === "produtos") {
+
+            document
+                .getElementById("secaoProdutos")
+                .classList.add("ativa");
+
+            carregarProdutos();
+
+        }
+
+
+        if (secao === "pedidos") {
+
+            document
+                .getElementById("secaoPedidos")
+                .classList.add("ativa");
+
+            carregarPedidos();
+
+        }
+
+    }
+
+
+    function voltarMenu() {
+
+        document
+            .getElementById("secaoProdutos")
+            .classList.remove("ativa");
+
+
+        document
+            .getElementById("secaoPedidos")
+            .classList.remove("ativa");
+
+
+        document
+            .getElementById("menuPainel")
+            .style.display = "grid";
+
+    }
+
+
+    /* ==========================
+       CARREGAR PRODUTOS
+    ========================== */
+
+    async function carregarProdutos() {
+
+        const tabela =
+            document.getElementById("tabelaProdutos");
+
+
+        tabela.innerHTML = `
+            <tr>
+                <td colspan="5" class="vazio">
+                    Carregando produtos...
+                </td>
+            </tr>
+        `;
+
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabaseClient
+                .from("produtos")
+                .select("*")
+                .order(
+                    "criado_em",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            produtos = data || [];
+
+
+            if (!produtos.length) {
+
+                tabela.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="vazio">
+                            Nenhum produto cadastrado.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+
+            }
+
+
+            tabela.innerHTML =
+                produtos
+                    .map(produto => {
+
+                        const preco =
+                            Number(
+                                produto.preco || 0
+                            ).toLocaleString(
+                                "pt-BR",
+                                {
+                                    style: "currency",
+                                    currency: "BRL"
+                                }
+                            );
+
+
+                        const data =
+                            produto.criado_em
+                                ? new Date(
+                                    produto.criado_em
+                                ).toLocaleDateString(
+                                    "pt-BR"
+                                )
+                                : "-";
+
+
+                        return `
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        ${escapar(
+                                            produto.nome || "-"
+                                        )}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    ${escapar(
+                                        produto.categoria || "-"
+                                    )}
+                                           >
 
                     </div>
 
