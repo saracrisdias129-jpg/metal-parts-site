@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Painel administrativo da Metal Parts."
+    >
+
+    <title>Painel | Metal Parts</title>
+
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        .painel-admin {
+            padding: 50px 0 80px;
+            min-height: 70vh;
+        }
+
+        .cabecalho-painel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .cabecalho-painel h1 {
+            margin-bottom: 8px;
+        }
+
+        .cabecalho-painel p {
+            margin: 0;
+        }
+
+        .acoes-painel {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .botao-painel {
+            border: none;
+            cursor: pointer;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .botao-painel:hover {
+            transform: translateY(-1px);
+        }
+
+        .botao-atualizar {
+            background: #f2c300;
+            color: #111;
+        }
+
+        .botao-sair {
+            background: #111;
+            color: #fff;
+        }
+
+        .botao-excluir {
+            background: #c62828;
+            color: #fff;
+        }
+
+        .resumo-painel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .card-resumo {
+            background: #fff;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+            border-left: 5px solid #f2c300;
+        }
+
+        .card-resumo span {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .card-resumo strong {
+            font-size: 28px;
+            color: #111;
+        }
+
+        .secao-painel {
+            background: #fff;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        .secao-painel h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .tabela-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .tabela-painel {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        .tabela-painel th,
+        .tabela-painel td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .tabela-painel th {
+            background: #111;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .tabela-painel td {
+            font-size: 14px;
+        }
+
+        .status-select {
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            padding: 8px;
+            background: #fff;
+            font-size: 13px;
+        }
+
+        .botao-status {
+            border: none;
+            background: #f2c300;
+            color: #111;
+            border-radius: 7px;
+            padding: 8px 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .botao-status:hover {
+            opacity: 0.85;
+        }
+
+        .pedido-status-acoes {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .mensagem-painel {
+            padding: 15px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .mensagem-painel.visivel {
+            display: block;
+        }
+
+        .mensagem-erro {
+            background: #ffe1e1;
+            color: #9b1c1c;
+        }
+
+        .mensagem-sucesso {
+            background: #e4f7e8;
+            color: #176b2c;
+        }
+
+        .vazio-painel {
+            text-align: center;
+            padding: 35px 20px;
+            color: #777;
+        }
+
+        .carregando {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+
+        @media (max-width: 900px) {
+
+            .resumo-painel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .painel-admin {
+                padding-top: 30px;
+            }
+
+            .resumo-painel {
+                grid-template-columns: 1fr;
+            }
+
+            .secao-painel {
+                padding: 18px;
+            }
+
+            .cabecalho-painel {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header class="topo">
+
+        <div class="container">
+
+            <a
+                href="../index.html"
+                class="logo"
+            >
+                Metal Parts
+            </a>
+
+
+            <nav
+                class="menu"
+                aria-label="Navegação principal"
+            >
+
+                <a href="../index.html">
+                    Início
+                </a>
+
+                <a href="catalogo.html">
+                    Catálogo
+                </a>
+
+                <a href="pedido.html">
+                    Fazer Pedido
+                </a>
+
+                <a
+                    href="painel.html"
+                    class="ativo"
+                >
+                    Painel
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="painel-admin">
+
+        <div class="container">
+
+
+            <div class="cabecalho-painel">
+
+                <div>
+
+                    <span class="subtitulo">
+                        ADMINISTRAÇÃO
+                    </span>
+
+                    <h1>
+                        Painel da Metal Parts
+                    </h1>
+
+                    <p>
+                        Gerencie os pedidos recebidos pela Metal Parts.
+                    </p>
+
+                </div>
+
+
+                <div class="acoes-painel">
+
+                    <button
+                        type="button"
+                        class="botao-painel botao-atualizar"
+                        id="btnAtualizar"
+                    >
+                        Atualizar
+                    </button>
+
+                    <button
+                        type="button"
+                        class="botao-painel botao-sair"
+                        id="btnSair"
+                    >
+                        Sair
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="mensagemPainel"
+                class="mensagem-painel"
+            ></div>
+
+
+            <section class="resumo-painel">
+
+                <div class="card-resumo">
+
+                    <span>
+                        Total de pedidos
+                    </span>
+
+                    <strong id="totalPedidos">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card-resumo">
+
+                    <span>
+                        Pedidos novos
+                    </span>
+
+                    <strong id="pedidosNovos">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card-resumo">
+
+                    <span>
+                        Em andamento
+                    </span>
+
+                    <strong id="pedidosAndamento">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card-resumo">
+
+                    <span>
+                        Concluídos
+                    </span>
+
+                    <strong id="pedidosConcluidos">
+                        0
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <section class="secao-painel">
+
+                <h2>
+                    Pedidos recebidos
+                </h2>
+
+
+                <div
+                    id="pedidosContainer"
+                    class="tabela-container"
+                >
+
+                    <div class="carregando">
+                        Carregando pedidos...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <div class="container">
+
+            <p>
+                © 2026 Metal Parts.
+                Todos os direitos reservados.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../supabase/config.js"></script>
+
+
+    <script>
+
+        const pedidosContainer =
+            document.getElementById("pedidosContainer");
+
+        const totalPedidos =
+            document.getElementById("totalPedidos");
+
+        const pedidosNovos =
+            document.getElementById("pedidosNovos");
+
+        const pedidosAndamento =
+            document.getElementById("pedidosAndamento");
+
+        const pedidosConcluidos =
+            document.getElementById("pedidosConcluidos");
+
+        const mensagemPainel =
+            document.getElementById("mensagemPainel");
+
+        const btnAtualizar =
+            document.getElementById("btnAtualizar");
+
+        const btnSair =
+            document.getElementById("btnSair");
+
+
+        let pedidos = [];
+
+        let produtos = [];
+
+
+        function mostrarMensagem(texto, tipo = "sucesso") {
+
+            mensagemPainel.textContent = texto;
+
+            mensagemPainel.className =
+                "mensagem-painel visivel " +
+                (
+                    tipo === "erro"
+                        ? "mensagem-erro"
+                        : "mensagem-sucesso"
+                );
+
+            setTimeout(function () {
+
+                mensagemPainel.className =
+                    "mensagem-painel";
+
+            }, 4000);
+
+        }
+
+
+        function escaparHTML(valor) {
+
+            if (
+                valor === null ||
+                valor === undefined
+            ) {
+
+                return "";
+
+            }
+
+            return String(valor)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        function formatarMoeda(valor) {
+
+            const numero =
+                Number(valor);
+
+            if (!Number.isFinite(numero)) {
+
+                return "A consultar";
+
+            }
+
+            return numero.toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
+        }
+
+
+        function formatarData(data) {
+
+            if (!data) {
+
+                return "-";
+
+            }
+
+            const dataFormatada =
+                new Date(data);
+
+            if (
+                Number.isNaN(
+                    dataFormatada.getTime()
+                )
+            ) {
+
+                return "-";
+
+            }
+
+            return dataFormatada.toLocaleString(
+                "pt-BR"
+            );
+
+        }
+
+
+        function encontrarProduto(nome) {
+
+            if (!nome) {
+
+                return null;
+
+            }
+
+            const nomeNormalizado =
+                String(nome)
+                    .trim()
+                    .toLowerCase();
+
+            return produtos.find(
+                function (produto) {
+
+                    return String(
+                        produto.nome || ""
+                    )
+                        .trim()
+                        .toLowerCase()
+                        === nomeNormalizado;
+
+                }
+            ) || null;
+
+        }
+
+
+        async function verificarSessao() {
+
+            const {
+                data,
+                error
+            } = await supabaseClient.auth.getSession();
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao verificar sessão:",
+                    error
+                );
+
+                window.location.href =
+                    "../admin/login.html";
+
+                return false;
+
+            }
+
+
+            if (!data.session) {
+
+                window.location.href =
+                    "../admin/login.html";
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
+
+        async function carregarProdutos() {
+
+            const {
+                data,
+                error
+            } = await supabaseClient
+                .from("produtos")
+                .select("*")
+                .order(
+                    "criado_em",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao carregar produtos:",
+                    error
+                );
+
+                throw error;
+
+            }
+
+
+            produtos = data || [];
+
+        }
+
+
+        async function carregarPedidos() {
+
+            const {
+                data,
+                error
+            } = await supabaseClient
+                .from("pedidos")
+                .select("*")
+                .order(
+                    "criado_em",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao carregar pedidos:",
+                    error
+                );
+
+                throw error;
+
+            }
+
+
+            pedidos = data || [];
+
+            atualizarResumo();
+
+            renderizarPedidos();
+
+        }
+
+
+        function atualizarResumo() {
+
+            const novos =
+                pedidos.filter(
+                    function (pedido) {
+
+                        return pedido.status === "Novo";
+
+                    }
+                ).length;
+
+
+            const andamento =
+                pedidos.filter(
+                    function (pedido) {
+
+                        return pedido.status === "Em andamento";
+
+                    }
+                ).length;
+
+
+            const concluidos =
+                pedidos.filter(
+                    function (pedido) {
+
+                        return pedido.status === "Concluído";
+
+                    }
+                ).length;
+
+
+            totalPedidos.textContent =
+                pedidos.length;
+
+            pedidosNovos.textContent =
+                novos;
+
+            pedidosAndamento.textContent =
+                andamento;
+
+            pedidosConcluidos.textContent =
+                concluidos;
+
+        }
+
+
+        function renderizarPedidos() {
+
+            if (!pedidos.length) {
+
+                pedidosContainer.innerHTML = `
+
+                    <div class="vazio-painel">
+
+                        <strong>
+                            Nenhum pedido recebido ainda.
+                        </strong>
+
+                        <p>
+                            Quando um cliente fizer um pedido,
+                            ele aparecerá aqui.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            pedidosContainer.innerHTML = `
+
+                <table class="tabela-painel">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Pedido
+                            </th>
+
+                            <th>
+                                Cliente
+                            </th>
+
+                            <th>
+                                Telefone
+                            </th>
+
+                            <th>
+                                Peça
+                            </th>
+
+                            <th>
+                                Qtd.
+                            </th>
+
+                            <th>
+                                Total
+                            </th>
+
+                            <th>
+                                Data
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        ${pedidos.map(
+                            function (pedido) {
+
+                                const produto =
+                                    encontrarProduto(
+                                        pedido.peca
+                                    );
+
+                                const preco =
+                                    produto
+                                        ? Number(
+                                            produto.preco
+                                        )
+                                        : NaN;
+
+                                const quantidade =
+                                    Number(
+                                        pedido.quantidade
+                                    ) || 1;
+
+                                const total =
+                                    Number.isFinite(
+                                        preco
+                                    )
+                                        ? preco * quantidade
+                                        : NaN;
+
+
+                                return `
+
+                                    <tr>
+
+                                        <td>
+
+                                            <strong>
+                                                #${escaparHTML(
+                                                    String(
+                                                        pedido.id
+                                                    ).substring(
+                                                        0,
+                                                        8
+                                                    )
+                                                )}
+                                            </strong>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <strong>
+                                                ${escaparHTML(
+                                                    pedido.cliente
+                                                )}
+                                            </strong>
+
+                                            ${
+                                                pedido.observacoes
+                                                    ? `
+                                                        <br>
+                                                        <small>
+                                                            ${escaparHTML(
+                                                                pedido.observacoes
+                                                            )}
+                                                        </small>
+                                                      `
+                                                    : ""
+                                            }
+
+                                        </td>
+
+
+                                        <td>
+                                            ${escaparHTML(
+                                                pedido.telefone
+                                            )}
+                                        </td>
+
+
+                                        <td>
+
+                                            ${escaparHTML(
+                                                pedido.peca
+                                            )}
+
+                                            ${
+                                                produto
+                                                    ? `
+                                                        <br>
+                                                        <small>
+                                                            ${escaparHTML(
+                                                                produto.categoria || ""
+                                                            )}
+                                                        </small>
+                                                      `
+                                                    : ""
+                                            }
+
+                                        </td>
+
+
+                                        <td>
+                                            ${quantidade}
+                                        </td>
+
+
+                                        <td>
+
+                                            ${
+                                                Number.isFinite(
+                                                    total
+                                                )
+                                                    ? formatarMoeda(
+                                                        total
+                                                    )
+                                                    : "A consultar"
+                                            }
+
+                                        </td>
+
+
+                                        <td>
+
+                                            ${formatarData(
+                                                pedido.criado_em
+                                            )}
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <select
+                                                class="status-select"
+                                                id="status-${escaparHTML(
+                                                    pedido.id
+                                                )}"
+                                            >
+
+                                                <option
+                                                    value="Novo"
+                                                    ${
+                                                        pedido.status === "Novo"
+                                                            ? "selected"
+                                                            : ""
+                                                    }
+                                                >
+                                                    Novo
+                                                </option>
+
+                                                <option
+                                                    value="Em andamento"
+                                                    ${
+                                                        pedido.status === "Em andamento"
+                                                            ? "selected"
+                                                            : ""
+                                                    }
+                                                >
+                                                    Em andamento
+                                                </option>
+
+                                                <option
+                                                    value="Concluído"
+                                                    ${
+                                                        pedido.status === "Concluído"
+                                                            ? "selected"
+                                                            : ""
+                                                    }
+                                                >
+                                                    Concluído
+                                                </option>
+
+                                                <option
+                                                    value="Cancelado"
+                                                    ${
+                                                        pedido.status === "Cancelado"
+                                                            ? "selected"
+                                                            : ""
+                                                    }
+                                                >
+                                                    Cancelado
+                                                </option>
+
+                                            </select>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <div class="pedido-status-acoes">
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-status"
+                                                    onclick="salvarStatus('${escaparHTML(
+                                                        pedido.id
+                                                    )}')"
+                                                >
+                                                    Salvar
+                                                </button>
+
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-painel botao-excluir"
+                                                    onclick="excluirPedido('${escaparHTML(
+                                                        pedido.id
+                                                    )}')"
+                                                >
+                                                    Excluir
+                                                </button>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                `;
+
+                            }
+                        ).join("")}
+
+                    </tbody>
+
+                </table>
+
+            `;
+
+        }
+
+
+        async function salvarStatus(id) {
+
+            const select =
+                document.getElementById(
+                    "status-" + id
+                );
+
+
+            if (!select) {
+
+                return;
+
+            }
+
+
+            const novoStatus =
+                select.value;
+
+
+            const {
+                error
+            } = await supabaseClient
+                .from("pedidos")
+                .update({
+                    status: novoStatus
+                })
+                .eq(
+                    "id",
+                    id
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao atualizar status:",
+                    error
+                );
+
+                mostrarMensagem(
+                    "Não foi possível atualizar o status.",
+                    "erro"
+                );
+
+                return;
+
+            }
+
+
+            mostrarMensagem(
+                "Status do pedido atualizado com sucesso."
+            );
+
+
+            await carregarPedidos();
+
+        }
+
+
+        async function excluirPedido(id) {
+
+            const confirmar =
+                window.confirm(
+                    "Tem certeza que deseja excluir este pedido?"
+                );
+
+
+            if (!confirmar) {
+
+                return;
+
+            }
+
+
+            const {
+                error
+            } = await supabaseClient
+                .from("pedidos")
+                .delete()
+                .eq(
+                    "id",
+                    id
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "Erro ao excluir pedido:",
+                    error
+                );
+
+                mostrarMensagem(
+                    "Não foi possível excluir o pedido.",
+                    "erro"
+                );
+
+                return;
+
+            }
+
+
+            mostrarMensagem(
+                "Pedido excluído com sucesso."
+            );
+
+
+            await carregarPedidos();
+
+        }
+
+
+        async function carregarTudo() {
+
+            pedidosContainer.innerHTML = `
+
+                <div class="carregando">
+                    Atualizando pedidos...
+                </div>
+
+            `;
+
+
+            try {
+
+                await Promise.all([
+                    carregarProdutos(),
+                    carregarPedidos()
+                ]);
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao atualizar painel:",
+                    erro
+                );
+
+                mostrarMensagem(
+                    "Não foi possível carregar os dados do painel.",
+                    "erro"
+                );
+
+            }
+
+        }
+
+
+        async function sair() {
+
+            await supabaseClient.auth.signOut();
+
+            window.location.href =
+                "../admin/login.html";
+
+        }
+
+
+        btnAtualizar.addEventListener(
+            "click",
+            carregarTudo
+        );
+
+
+        btnSair.addEventListener(
+            "click",
+            sair
+        );
+
+
+        async function iniciarPainel() {
+
+            const autenticado =
+                await verificarSessao();
+
+
+            if (!autenticado) {
+
+                return;
+
+            }
+
+
+            await carregarTudo();
+
+        }
+
+
+        iniciarPainel();
+
+    </script>
+
+
+</body>
+
+</html>

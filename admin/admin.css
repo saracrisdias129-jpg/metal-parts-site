@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* LOGIN */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #111827;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 430px;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.login-logo {
+    text-align: center;
+    color: #111827;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.login-subtitulo {
+    margin-top: 8px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.login-box h1 {
+    margin-top: 30px;
+    margin-bottom: 8px;
+    color: #111827;
+    font-size: 28px;
+}
+
+.login-descricao {
+    margin-bottom: 25px;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* CAMPOS */
+
+.campo {
+    margin-bottom: 18px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 7px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111827;
+    outline: none;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: #111827;
+}
+
+/* OPÇÕES */
+
+.login-opcoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.mostrar-senha {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #4b5563;
+    font-size: 13px;
+}
+
+.mostrar-senha input {
+    width: auto;
+}
+
+.botao-link {
+    border: none;
+    background: transparent;
+    color: #111827;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+/* BOTÃO LOGIN */
+
+.botao-login {
+    width: 100%;
+    padding: 13px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #111827;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.botao-login:hover {
+    opacity: 0.9;
+}
+
+.botao-login:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* MENSAGEM */
+
+.mensagem-login {
+    min-height: 20px;
+    margin-top: 15px;
+    text-align: center;
+    color: #dc2626;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.mensagem-login.sucesso {
+    color: #15803d;
+}
+
+/* VOLTAR */
+
+.login-voltar {
+    display: block;
+    margin-top: 25px;
+    text-align: center;
+    color: #4b5563;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.login-voltar:hover {
+    color: #111827;
+}
+
+/* CABEÇALHO ADMIN */
+
+.admin-header {
+    padding: 18px 25px;
+    background: #111827;
+    color: #ffffff;
+}
+
+.admin-header-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.admin-logo {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.admin-header a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* CONTEÚDO */
+
+.admin-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 35px 20px;
+}
+
+.admin-container h1 {
+    margin-bottom: 10px;
+    color: #111827;
+}
+
+.admin-container p {
+    color: #6b7280;
+}
+
+/* CARDS */
+
+.admin-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.admin-card {
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+}
+
+.admin-card h2 {
+    margin-bottom: 8px;
+    color: #111827;
+    font-size: 20px;
+}
+
+.admin-card p {
+    margin-bottom: 18px;
+}
+
+/* BOTÕES ADMIN */
+
+.botao-admin {
+    display: inline-block;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #111827;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.botao-admin:hover {
+    opacity: 0.9;
+}
+
+.botao-secundario {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.botao-perigo {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* PRODUTOS */
+
+.produtos-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.formulario-produto {
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.lista-produtos {
+    display: grid;
+    gap: 15px;
+}
+
+.produto-admin {
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.produto-admin h3 {
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.produto-admin p {
+    margin-bottom: 6px;
+    color: #6b7280;
+}
+
+.produto-acoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+/* TABELA */
+
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    background: #f9fafb;
+    color: #111827;
+}
+
+td {
+    color: #4b5563;
+}
+
+/* RODAPÉ */
+
+.admin-footer {
+    margin-top: 40px;
+    padding: 25px 20px;
+    background: #111827;
+    color: #ffffff;
+    text-align: center;
+}
+
+.admin-footer p {
+    color: #d1d5db;
+    font-size: 14px;
+}
+
+/* CELULAR */
+
+@media (max-width: 700px) {
+    .login-box {
+        padding: 30px 22px;
+    }
+
+    .login-opcoes {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-header-content {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .produtos-topo {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-container {
+        padding: 25px 15px;
+    }
+}
