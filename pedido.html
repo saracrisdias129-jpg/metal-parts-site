@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Fazer Pedido | Metal Parts</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f4f4f4;
+            color: #151515;
+            min-height: 100vh;
+        }
+
+
+        button,
+        input,
+        textarea {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .mp-header {
+            width: 100%;
+            background: #0b0b0b;
+            border-bottom: 1px solid #242424;
+        }
+
+
+        .mp-header-inner {
+            max-width: 1180px;
+            margin: 0 auto;
+
+            min-height: 76px;
+
+            padding: 0 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+
+        .mp-logo {
+            text-decoration: none;
+
+            color: #ffffff;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+            white-space: nowrap;
+        }
+
+
+        .mp-logo span {
+            color: #f5c400;
+        }
+
+
+        .mp-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+
+        .mp-nav a {
+            color: #bdbdbd;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+
+        .mp-nav a:hover {
+            color: #f5c400;
+        }
+
+
+        .mp-nav a.active {
+            color: #f5c400;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .mp-hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b0b0b 0%,
+                    #1b1b1b 100%
+                );
+
+            color: #ffffff;
+
+            padding: 58px 24px;
+
+            border-bottom: 3px solid #f5c400;
+        }
+
+
+        .mp-hero-inner {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+
+        .mp-hero h1 {
+            font-size: clamp(30px, 5vw, 46px);
+
+            line-height: 1.1;
+
+            font-weight: 800;
+
+            letter-spacing: -1.2px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .mp-hero p {
+            max-width: 650px;
+
+            color: #c7c7c7;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .mp-main {
+            max-width: 1180px;
+
+            margin: 0 auto;
+
+            padding: 50px 24px 70px;
+        }
+
+
+        .mp-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.4fr)
+                minmax(300px, 0.8fr);
+
+            gap: 28px;
+
+            align-items: start;
+        }
+
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        .mp-card {
+            background: #ffffff;
+
+            border: 1px solid #dedede;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.06);
+        }
+
+
+        .mp-form-card {
+            padding: 32px;
+        }
+
+
+        .mp-summary-card {
+            padding: 28px;
+
+            position: sticky;
+
+            top: 25px;
+        }
+
+
+        .mp-card-title {
+            font-size: 23px;
+
+            font-weight: 800;
+
+            color: #111111;
+
+            margin-bottom: 8px;
+        }
+
+
+        .mp-card-description {
+            color: #777777;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .mp-form {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 20px;
+        }
+
+
+        .mp-field {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+
+        .mp-field label {
+            color: #222222;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .mp-field input,
+        .mp-field textarea {
+            width: 100%;
+
+            border: 1px solid #d7d7d7;
+
+            border-radius: 9px;
+
+            background: #ffffff;
+
+            color: #151515;
+
+            padding: 13px 14px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .mp-field input {
+            height: 48px;
+        }
+
+
+        .mp-field textarea {
+            min-height: 125px;
+
+            resize: vertical;
+        }
+
+
+        .mp-field input::placeholder,
+        .mp-field textarea::placeholder {
+            color: #a1a1a1;
+        }
+
+
+        .mp-field input:focus,
+        .mp-field textarea:focus {
+            border-color: #f5c400;
+
+            box-shadow:
+                0 0 0 3px rgba(245,196,0,0.16);
+        }
+
+
+        .mp-field input:disabled {
+            background: #f0f0f0;
+
+            color: #777777;
+
+            cursor: not-allowed;
+        }
+
+
+        .mp-two-columns {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+        }
+
+
+        /* =====================================================
+           BOTÃO
+        ===================================================== */
+
+        .mp-submit {
+            width: 100%;
+
+            min-height: 52px;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            background: #f5c400;
+
+            color: #111111;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .mp-submit:hover {
+            background: #ffd21a;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 8px 20px rgba(245,196,0,0.25);
+        }
+
+
+        .mp-submit:active {
+            transform: translateY(0);
+        }
+
+
+        .mp-submit:disabled {
+            opacity: 0.65;
+
+            cursor: wait;
+
+            transform: none;
+
+            box-shadow: none;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .mp-status {
+            display: none;
+
+            border-radius: 9px;
+
+            padding: 13px 14px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .mp-status.show {
+            display: block;
+        }
+
+
+        .mp-status.success {
+            background: #fff8d6;
+
+            border: 1px solid #f1d86b;
+
+            color: #6c5700;
+        }
+
+
+        .mp-status.error {
+            background: #eeeeee;
+
+            border: 1px solid #cfcfcf;
+
+            color: #333333;
+        }
+
+
+        /* =====================================================
+           RESUMO
+        ===================================================== */
+
+        .mp-summary-title {
+            font-size: 21px;
+
+            font-weight: 800;
+
+            color: #111111;
+
+            margin-bottom: 22px;
+        }
+
+
+        .mp-summary-list {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .mp-summary-item {
+            padding: 16px 0;
+
+            border-bottom: 1px solid #e8e8e8;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+
+        .mp-summary-item span {
+            color: #858585;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .mp-summary-item strong {
+            color: #1b1b1b;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            word-break: break-word;
+        }
+
+
+        .mp-summary-total {
+            margin-top: 18px;
+
+            padding-top: 18px;
+
+            border-top: 2px solid #111111;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        .mp-summary-total span {
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #333333;
+        }
+
+
+        .mp-summary-total strong {
+            font-size: 21px;
+
+            font-weight: 800;
+
+            color: #c49c00;
+        }
+
+
+        /* =====================================================
+           INFORMAÇÃO
+        ===================================================== */
+
+        .mp-info {
+            margin-top: 25px;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            background: #f5f5f5;
+
+            border-left: 4px solid #f5c400;
+        }
+
+
+        .mp-info strong {
+            display: block;
+
+            color: #222222;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .mp-info p {
+            color: #747474;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .mp-footer {
+            background: #0b0b0b;
+
+            color: #999999;
+
+            text-align: center;
+
+            padding: 24px;
+
+            font-size: 12px;
+
+            border-top: 2px solid #f5c400;
+        }
+
+
+        /* =====================================================
+           RESPONSIVO
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .mp-header-inner {
+                min-height: auto;
+
+                padding-top: 18px;
+                padding-bottom: 18px;
+
+                flex-direction: column;
+
+                gap: 16px;
+            }
+
+
+            .mp-nav {
+                gap: 20px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+
+            .mp-hero {
+                padding: 42px 20px;
+            }
+
+
+            .mp-main {
+                padding: 30px 16px 50px;
+            }
+
+
+            .mp-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .mp-summary-card {
+                position: static;
+            }
+
+
+            .mp-form-card,
+            .mp-summary-card {
+                padding: 22px;
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .mp-two-columns {
+                grid-template-columns: 1fr;
+            }
+
+
+            .mp-hero h1 {
+                font-size: 30px;
+            }
+
+
+            .mp-hero p {
+                font-size: 14px;
+            }
+
+
+            .mp-nav {
+                gap: 14px;
+            }
+
+
+            .mp-nav a {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="mp-header">
+
+        <div class="mp-header-inner">
+
+            <a
+                href="../index.html"
+                class="mp-logo"
+            >
+                METAL <span>PARTS</span>
+            </a>
+
+
+            <nav class="mp-nav">
+
+                <a href="../index.html">
+                    Início
+                </a>
+
+                <a href="catalogo.html">
+                    Catálogo
+                </a>
+
+                <a
+                    href="pedido.html"
+                    class="active"
+                >
+                    Fazer Pedido
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CABEÇALHO DA PÁGINA
+    ====================================================== -->
+
+    <section class="mp-hero">
+
+        <div class="mp-hero-inner">
+
+            <h1>
+                Faça seu pedido
+            </h1>
+
+            <p>
+                Preencha seus dados, informe a peça que você procura
+                e envie sua solicitação diretamente para a Metal Parts.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+
+    <main class="mp-main">
+
+        <div class="mp-grid">
+
+
+            <!-- =================================================
+                 FORMULÁRIO
+            ================================================== -->
+
+            <section class="mp-card mp-form-card">
+
+                <h2 class="mp-card-title">
+                    Dados do pedido
+                </h2>
+
+                <p class="mp-card-description">
+                    Informe seus dados para que nossa equipe possa
+                    verificar a disponibilidade da peça e entrar em contato.
+                </p>
+
+
+                <form
+                    id="pedidoForm"
+                    class="mp-form"
+                >
+
+
+                    <div class="mp-field">
+
+                        <label for="cliente">
+                            Nome completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="cliente"
+                            name="cliente"
+                            placeholder="Digite seu nome"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="mp-field">
+
+                        <label for="telefone">
+                            WhatsApp
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telefone"
+                            name="telefone"
+                            placeholder="(27) 99999-9999"
+                            maxlength="15"
+                            autocomplete="tel"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="mp-field">
+
+                        <label for="peca">
+                            Peça desejada
+                        </label>
+
+                        <input
+                            type="text"
+                            id="peca"
+                            name="peca"
+                            placeholder="Ex.: Pastilha de freio"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="mp-two-columns">
+
+
+                        <div class="mp-field">
+
+                            <label for="quantidade">
+                                Quantidade
+                            </label>
+
+                            <input
+                                type="number"
+                                id="quantidade"
+                                name="quantidade"
+                                value="1"
+                                min="1"
+                                step="1"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mp-field">
+
+                            <label>
+                                Atendimento
+                            </label>
+
+                            <input
+                                type="text"
+                                value="Solicitação de orçamento"
+                                disabled
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="mp-field">
+
+                        <label for="observacoes">
+                            Observações
+                        </label>
+
+                        <textarea
+                            id="observacoes"
+                            name="observacoes"
+                            placeholder="Informe modelo do veículo, ano, motor ou qualquer outra informação importante."
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="mp-submit"
+                        id="btnEnviar"
+                    >
+                        Enviar pedido pelo WhatsApp
+                    </button>
+
+
+                    <div
+                        id="mensagemStatus"
+                        class="mp-status"
+                    ></div>
+
+
+                </form>
+
+            </section>
+
+
+            <!-- =================================================
+                 RESUMO
+            ================================================== -->
+
+            <aside class="mp-card mp-summary-card">
+
+                <h2 class="mp-summary-title">
+                    Resumo do pedido
+                </h2>
+
+
+                <div class="mp-summary-list">
+
+
+                    <div class="mp-summary-item">
+
+                        <span>
+                            Peça
+                        </span>
+
+                        <strong id="resumoPeca">
+                            Nenhuma peça selecionada
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mp-summary-item">
+
+                        <span>
+                            Categoria
+                        </span>
+
+                        <strong id="resumoCategoria">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mp-summary-item">
+
+                        <span>
+                            Quantidade
+                        </span>
+
+                        <strong id="resumoQuantidade">
+                            1
+                        </strong>
+
+                    </div>
+
+
+                    <div class="mp-summary-item">
+
+                        <span>
+                            Valor unitário
+                        </span>
+
+                        <strong id="resumoValor">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="mp-summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="resumoTotal">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="mp-info">
+
+                    <strong>
+                        Como funciona?
+                    </strong>
+
+                    <p>
+                        Ao enviar, seus dados são registrados
+                        para atendimento. Em seguida, você será
+                        direcionado para o WhatsApp da Metal Parts
+                        com as informações do pedido preenchidas.
+                    </p>
+
+                </div>
+
+            </aside>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         RODAPÉ
+    ====================================================== -->
+
+    <footer class="mp-footer">
+
+        © 2026 Metal Parts. Todos os direitos reservados.
+
+    </footer>
+
+
+
+    <script>
+
+        /* =====================================================
+           SUPABASE
+        ===================================================== */
+
+        const SUPABASE_URL =
+            "https://iagrhzfxqixetsazjhkd.supabase.co";
+
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_JyYyKya1UMBCbgnPsyAKXw_fLpEbfXl";
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
+
+
+        /* =====================================================
+           WHATSAPP
+        ===================================================== */
+
+        const numeroMetalParts =
+            "5527999556584";
+
+
+        /* =====================================================
+           ELEMENTOS
+        ===================================================== */
+
+        const form =
+            document.getElementById("pedidoForm");
+
+
+        const clienteInput =
+            document.getElementById("cliente");
+
+
+        const telefoneInput =
+            document.getElementById("telefone");
+
+
+        const pecaInput =
+            document.getElementById("peca");
+
+
+        const quantidadeInput =
+            document.getElementById("quantidade");
+
+
+        const observacoesInput =
+            document.getElementById("observacoes");
+
+
+        const btnEnviar =
+            document.getElementById("btnEnviar");
+
+
+        const mensagemStatus =
+            document.getElementById("mensagemStatus");
+
+
+        const resumoPeca =
+            document.getElementById("resumoPeca");
+
+
+        const resumoCategoria =
+            document.getElementById("resumoCategoria");
+
+
+        const resumoQuantidade =
+            document.getElementById("resumoQuantidade");
+
+
+        const resumoValor =
+            document.getElementById("resumoValor");
+
+
+        const resumoTotal =
+            document.getElementById("resumoTotal");
+
+
+        /* =====================================================
+           PRODUTO DO CATÁLOGO
+        ===================================================== */
+
+        let produtoSelecionado = null;
+
+
+        try {
+
+            const produtoSalvo =
+                localStorage.getItem(
+                    "produtoSelecionadoMetalParts"
+                );
+
+
+            if (produtoSalvo) {
+
+                produtoSelecionado =
+                    JSON.parse(produtoSalvo);
+
+
+                if (produtoSelecionado.nome) {
+
+                    pecaInput.value =
+                        produtoSelecionado.nome;
+
+                    resumoPeca.textContent =
+                        produtoSelecionado.nome;
+
+                }
+
+
+                if (produtoSelecionado.categoria) {
+
+                    resumoCategoria.textContent =
+                        produtoSelecionado.categoria;
+
+                }
+
+
+                if (
+                    produtoSelecionado.preco !== undefined &&
+                    produtoSelecionado.preco !== null &&
+                    produtoSelecionado.preco !== ""
+                ) {
+
+                    const preco =
+                        Number(
+                            produtoSelecionado.preco
+                        );
+
+
+                    if (!isNaN(preco)) {
+
+                        resumoValor.textContent =
+                            preco.toLocaleString(
+                                "pt-BR",
+                                {
+                                    style: "currency",
+                                    currency: "BRL"
+                                }
+                            );
+
+                    }
+
+                }
+
+            }
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar produto:",
+                erro
+            );
+
+        }
+
+
+        /* =====================================================
+           ATUALIZAR RESUMO
+        ===================================================== */
+
+        function atualizarResumo() {
+
+            const quantidade =
+                Math.max(
+                    1,
+                    Number(
+                        quantidadeInput.value
+                    ) || 1
+                );
+
+
+            resumoQuantidade.textContent =
+                quantidade;
+
+
+            if (
+                produtoSelecionado &&
+                produtoSelecionado.preco !== undefined &&
+                produtoSelecionado.preco !== null &&
+                produtoSelecionado.preco !== ""
+            ) {
+
+                const preco =
+                    Number(
+                        produtoSelecionado.preco
+                    );
+
+
+                if (!isNaN(preco)) {
+
+                    const total =
+                        preco * quantidade;
+
+
+                    resumoTotal.textContent =
+                        total.toLocaleString(
+                            "pt-BR",
+                            {
+                                style: "currency",
+                                currency: "BRL"
+                            }
+                        );
+
+                    return;
+
+                }
+
+            }
+
+
+            resumoTotal.textContent =
+                "-";
+
+        }
+
+
+        quantidadeInput.addEventListener(
+            "input",
+            atualizarResumo
+        );
+
+
+        quantidadeInput.addEventListener(
+            "change",
+            atualizarResumo
+        );
+
+
+        atualizarResumo();
+
+
+        /* =====================================================
+           ATUALIZAR PEÇA
+        ===================================================== */
+
+        pecaInput.addEventListener(
+            "input",
+            function () {
+
+                const valor =
+                    pecaInput.value.trim();
+
+
+                resumoPeca.textContent =
+                    valor ||
+                    "Nenhuma peça selecionada";
+
+            }
+        );
+
+
+        /* =====================================================
+           MÁSCARA DO WHATSAPP
+        ===================================================== */
+
+        telefoneInput.addEventListener(
+            "input",
+            function () {
+
+                let valor =
+                    telefoneInput.value
+                        .replace(/\D/g, "")
+                        .slice(0, 11);
+
+
+                if (valor.length <= 2) {
+
+                    telefoneInput.value =
+                        valor.length
+                            ? "(" + valor
+                            : "";
+
+                    return;
+
+                }
+
+
+                if (valor.length <= 7) {
+
+                    telefoneInput.value =
+                        "(" +
+                        valor.slice(0, 2) +
+                        ") " +
+                        valor.slice(2);
+
+                    return;
+
+                }
+
+
+                telefoneInput.value =
+                    "(" +
+                    valor.slice(0, 2) +
+                    ") " +
+                    valor.slice(2, 7) +
+                    "-" +
+                    valor.slice(7);
+
+            }
+        );
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        function mostrarStatus(
+            mensagem,
+            tipo
+        ) {
+
+            mensagemStatus.textContent =
+                mensagem;
+
+            mensagemStatus.className =
+                "mp-status show " +
+                tipo;
+
+        }
+
+
+        /* =====================================================
+           ENVIO DO PEDIDO
+        ===================================================== */
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const nomeCliente =
+                    clienteInput.value.trim();
+
+
+                const numeroTelefone =
+                    telefoneInput.value.trim();
+
+
+                const nomePeca =
+                    pecaInput.value.trim();
+
+
+                const quantidade =
+                    Number(
+                        quantidadeInput.value
+                    );
+
+
+                const observacoes =
+                    observacoesInput.value.trim();
+
+
+                /* =============================================
+                   VALIDAÇÕES
+                ============================================= */
+
+                if (!nomeCliente) {
+
+                    mostrarStatus(
+                        "Informe seu nome.",
+                        "error"
+                    );
+
+                    clienteInput.focus();
+
+                    return;
+
+                }
+
+
+                if (!numeroTelefone) {
+
+                    mostrarStatus(
+                        "Informe seu WhatsApp.",
+                        "error"
+                    );
+
+                    telefoneInput.focus();
+
+                    return;
+
+                }
+
+
+                const telefoneNumeros =
+                    numeroTelefone.replace(
+                        /\D/g,
+                        ""
+                    );
+
+
+                if (
+                    telefoneNumeros.length < 10
+                ) {
+
+                    mostrarStatus(
+                        "Informe um WhatsApp válido.",
+                        "error"
+                    );
+
+                    telefoneInput.focus();
+
+                    return;
+
+                }
+
+
+                if (!nomePeca) {
+
+                    mostrarStatus(
+                        "Informe a peça desejada.",
+                        "error"
+                    );
+
+                    pecaInput.focus();
+
+                    return;
+
+                }
+
+
+                if (
+                    !Number.isInteger(quantidade) ||
+                    quantidade < 1
+                ) {
+
+                    mostrarStatus(
+                        "Informe uma quantidade válida.",
+                        "error"
+                    );
+
+                    quantidadeInput.focus();
+
+                    return;
+
+                }
+
+
+                /* =============================================
+                   VALORES
+                ============================================= */
+
+                let categoria =
+                    "";
+
+                let valorUnitario =
+                    "";
+
+                let valorTotal =
+                    "";
+
+
+                if (produtoSelecionado) {
+
+                    if (
+                        produtoSelecionado.categoria
+                    ) {
+
+                        categoria =
+                            produtoSelecionado.categoria;
+
+                    }
+
+
+                    if (
+                        produtoSelecionado.preco !== undefined &&
+                        produtoSelecionado.preco !== null &&
+                        produtoSelecionado.preco !== ""
+                    ) {
+
+                        const preco =
+                            Number(
+                                produtoSelecionado.preco
+                            );
+
+
+                        if (!isNaN(preco)) {
+
+                            valorUnitario =
+                                preco.toLocaleString(
+                                    "pt-BR",
+                                    {
+                                        style: "currency",
+                                        currency: "BRL"
+                                    }
+                                );
+
+
+                            valorTotal =
+                                (
+                                    preco *
+                                    quantidade
+                                ).toLocaleString(
+                                    "pt-BR",
+                                    {
+                                        style: "currency",
+                                        currency: "BRL"
+                                    }
+                                );
+
+                        }
+
+                    }
+
+                }
+
+
+                /* =============================================
+                   MENSAGEM WHATSAPP
+                ============================================= */
+
+                let mensagem =
+                    "Olá! Gostaria de fazer um pedido na Metal Parts.\n\n";
+
+
+                mensagem +=
+                    "Cliente: " +
+                    nomeCliente +
+                    "\n";
+
+
+                mensagem +=
+                    "WhatsApp: " +
+                    numeroTelefone +
+                    "\n";
+
+
+                mensagem +=
+                    "Peça: " +
+                    nomePeca +
+                    "\n";
+
+
+                mensagem +=
+                    "Quantidade: " +
+                    quantidade +
+                    "\n";
+
+
+                if (categoria) {
+
+                    mensagem +=
+                        "Categoria: " +
+                        categoria +
+                        "\n";
+
+                }
+
+
+                if (valorUnitario) {
+
+                    mensagem +=
+                        "Valor unitário: " +
+                        valorUnitario +
+                        "\n";
+
+                }
+
+
+                if (valorTotal) {
+
+                    mensagem +=
+                        "Total: " +
+                        valorTotal +
+                        "\n";
+
+                }
+
+
+                if (observacoes) {
+
+                    mensagem +=
+                        "\nObservações: " +
+                        observacoes;
+
+                }
+
+
+                const linkWhatsApp =
+                    "https://wa.me/" +
+                    numeroMetalParts +
+                    "?text=" +
+                    encodeURIComponent(
+                        mensagem
+                    );
+
+
+                /* =============================================
+                   BLOQUEAR BOTÃO
+                ============================================= */
+
+                btnEnviar.disabled =
+                    true;
+
+
+                btnEnviar.textContent =
+                    "Registrando pedido...";
+
+
+                mostrarStatus(
+                    "Registrando seu pedido...",
+                    "success"
+                );
+
+
+                /* =============================================
+                   SALVAR NO SUPABASE
+                ============================================= */
+
+                try {
+
+                    const resposta =
+                        await supabaseClient
+                            .from("pedidos")
+                            .insert([
+                                {
+                                    cliente:
+                                        nomeCliente,
+
+                                    telefone:
+                                        numeroTelefone,
+
+                                    peca:
+                                        nomePeca,
+
+                                    quantidade:
+                                        quantidade,
+
+                                    observacoes:
+                                        observacoes ||
+                                        null
+                                }
+                            ]);
+
+
+                    if (resposta.error) {
+
+                        console.error(
+                            "Erro Supabase:",
+                            resposta.error
+                        );
+
+
+                        mostrarStatus(
+                            "Não foi possível registrar o pedido. Tente novamente.",
+                            "error"
+                        );
+
+
+                        btnEnviar.disabled =
+                            false;
+
+
+                        btnEnviar.textContent =
+                            "Enviar pedido pelo WhatsApp";
+
+
+                        return;
+
+                    }
+
+
+                    /* =========================================
+                       PEDIDO REGISTRADO
+                    ========================================== */
+
+                    mostrarStatus(
+                        "Pedido registrado! Abrindo o WhatsApp...",
+                        "success"
+                    );
+
+
+                    localStorage.removeItem(
+                        "produtoSelecionadoMetalParts"
+                    );
+
+
+                    setTimeout(
+                        function () {
+
+                            window.location.href =
+                                linkWhatsApp;
+
+                        },
+                        500
+                    );
+
+
+                } catch (erro) {
+
+                    console.error(
+                        "Erro inesperado:",
+                        erro
+                    );
+
+
+                    mostrarStatus(
+                        "Ocorreu um erro ao enviar o pedido.",
+                        "error"
+                    );
+
+
+                    btnEnviar.disabled =
+                        false;
+
+
+                    btnEnviar.textContent =
+                        "Enviar pedido pelo WhatsApp";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
