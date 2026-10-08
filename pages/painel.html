@@ -107,9 +107,14 @@
             color: #111;
         }
 
+        .botao-cancelar {
+            background: #777;
+            color: #fff;
+        }
+
         .resumo-painel {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 18px;
             margin-bottom: 35px;
         }
@@ -192,6 +197,7 @@
             background: #fff;
             font-size: 14px;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .campo-produto:focus,
@@ -232,172 +238,482 @@
             color: #111;
             border-radius: 7px;
             padding: 8px 12px;
-                   let pedidos = [];
+            cursor: pointer;
+            font-weight: 700;
+        }
 
+        .botao-status:hover {
+            opacity: 0.9;
+        }
+
+        .mensagem-painel {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .mensagem-sucesso {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .mensagem-erro {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .sem-registros {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .produto-editando {
+            border: 2px solid #f2c300;
+            background: #fffdf0;
+        }
+
+        .data-registro {
+            white-space: nowrap;
+        }
+
+        @media (max-width: 1100px) {
+
+            .resumo-painel {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .form-produto {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .painel-admin {
+                padding: 30px 15px 60px;
+            }
+
+            .resumo-painel {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .form-produto {
+                grid-template-columns: 1fr;
+            }
+
+            .secao-painel {
+                padding: 18px;
+            }
+
+            .cabecalho-painel {
+                align-items: flex-start;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .resumo-painel {
+                grid-template-columns: 1fr;
+            }
+
+            .acoes-painel {
+                width: 100%;
+            }
+
+            .acoes-painel button {
+                flex: 1;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="painel-admin">
+
+        <div class="container">
+
+            <div class="cabecalho-painel">
+
+                <div>
+                    <h1>Painel da Metal Parts</h1>
+
+                    <p>
+                        Gerencie os produtos e os pedidos recebidos.
+                    </p>
+                </div>
+
+                <div class="acoes-painel">
+
+                    <button
+                        type="button"
+                        class="botao-painel botao-atualizar"
+                        onclick="carregarTudo()"
+                    >
+                        Atualizar
+                    </button>
+
+                    <button
+                        type="button"
+                        class="botao-painel botao-sair"
+                        onclick="sair()"
+                    >
+                        Sair
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div
+                id="mensagem"
+                class="mensagem-painel"
+            ></div>
+
+            <section class="resumo-painel">
+
+                <div class="card-resumo">
+                    <span>Total de produtos</span>
+                    <strong id="totalProdutos">0</strong>
+                </div>
+
+                <div class="card-resumo">
+                    <span>Total de pedidos</span>
+                    <strong id="totalPedidos">0</strong>
+                </div>
+
+                <div class="card-resumo">
+                    <span>Pedidos novos</span>
+                    <strong id="pedidosNovos">0</strong>
+                </div>
+
+                <div class="card-resumo">
+                    <span>Em andamento</span>
+                    <strong id="pedidosAndamento">0</strong>
+                </div>
+
+                <div class="card-resumo">
+                    <span>Concluídos</span>
+                    <strong id="pedidosConcluidos">0</strong>
+                </div>
+
+            </section>
+
+
+            <!-- GERENCIAR PRODUTOS -->
+
+            <section class="secao-painel">
+
+                <div class="topo-secao">
+
+                    <div>
+                        <h2>Gerenciar produtos</h2>
+
+                        <p>
+                            Adicione, edite ou exclua produtos do catálogo.
+                        </p>
+                    </div>
+
+                </div>
+
+                <form
+                    id="formProduto"
+                    class="form-produto"
+                    onsubmit="salvarProduto(event)"
+                >
+
+                    <div class="campo-grupo">
+
+                        <label for="nomeProduto">
+                            Nome do produto
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeProduto"
+                            class="campo-produto"
+                            placeholder="Ex.: Pastilha de freio"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="campo-grupo">
+
+                        <label for="precoProduto">
+                            Preço
+                        </label>
+
+                        <input
+                            type="number"
+                            id="precoProduto"
+                            class="campo-produto"
+                            placeholder="0,00"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="campo-grupo">
+
+                        <label for="categoriaProduto">
+                            Categoria
+                        </label>
+
+                        <input
+                            type="text"
+                            id="categoriaProduto"
+                            class="campo-produto"
+                            placeholder="Ex.: Freios"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="acoes-produto">
+
+                        <button
+                            type="submit"
+                            id="botaoSalvarProduto"
+                            class="botao-painel botao-adicionar"
+                        >
+                            Adicionar produto
+                        </button>
+
+                        <button
+                            type="button"
+                            id="botaoCancelarEdicao"
+                            class="botao-painel botao-cancelar"
+                            onclick="cancelarEdicao()"
+                            style="display:none;"
+                        >
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <div class="tabela-container">
+
+                    <table class="tabela-painel">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Produto</th>
+
+                                <th>Categoria</th>
+
+                                <th>Preço</th>
+
+                                <th>Cadastro</th>
+
+                                <th>Ações</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tabelaProdutos">
+
+                            <tr>
+                                <td
+                                    colspan="5"
+                                    class="sem-registros"
+                                >
+                                    Carregando produtos...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- PEDIDOS -->
+
+            <section class="secao-painel">
+
+                <div class="topo-secao">
+
+                    <div>
+                        <h2>Pedidos recebidos</h2>
+
+                        <p>
+                            Acompanhe e atualize os pedidos dos clientes.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="tabela-container">
+
+                    <table class="tabela-painel">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Cliente</th>
+
+                                <th>Telefone</th>
+
+                                <th>Peça</th>
+
+                                <th>Quantidade</th>
+
+                                <th>Observações</th>
+
+                                <th>Data</th>
+
+                                <th>Status</th>
+
+                                <th>Ação</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tabelaPedidos">
+
+                            <tr>
+                                <td
+                                    colspan="8"
+                                    class="sem-registros"
+                                >
+                                    Carregando pedidos...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script
+        src="../supabase/config.js"
+    ></script>
+
+
+    <script>
+
+        let pedidos = [];
         let produtos = [];
+        let produtoEditandoId = null;
 
+
+        /* =========================
+           MENSAGEM
+        ========================= */
 
         function mostrarMensagem(texto, tipo = "sucesso") {
 
-            mensagemPainel.textContent = texto;
+            const mensagem = document.getElementById("mensagem");
 
-            mensagemPainel.className =
-                "mensagem-painel visivel " +
-                (
-                    tipo === "erro"
-                        ? "mensagem-erro"
-                        : "mensagem-sucesso"
-                );
+            mensagem.textContent = texto;
 
-            setTimeout(function () {
+            mensagem.className =
+                "mensagem-painel " +
+                (tipo === "erro"
+                    ? "mensagem-erro"
+                    : "mensagem-sucesso");
 
-                mensagemPainel.className =
-                    "mensagem-painel";
+            setTimeout(() => {
+
+                mensagem.className = "mensagem-painel";
+
+                mensagem.textContent = "";
 
             }, 4000);
 
         }
 
 
-        function escaparHTML(valor) {
-
-            if (
-                valor === null ||
-                valor === undefined
-            ) {
-
-                return "";
-
-            }
-
-            return String(valor)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-
-        }
-
-
-        function formatarMoeda(valor) {
-
-            const numero =
-                Number(valor);
-
-            if (!Number.isFinite(numero)) {
-
-                return "A consultar";
-
-            }
-
-            return numero.toLocaleString(
-                "pt-BR",
-                {
-                    style: "currency",
-                    currency: "BRL"
-                }
-            );
-
-        }
-
-
-        function formatarData(data) {
-
-            if (!data) {
-
-                return "-";
-
-            }
-
-            const dataFormatada =
-                new Date(data);
-
-            if (
-                Number.isNaN(
-                    dataFormatada.getTime()
-                )
-            ) {
-
-                return "-";
-
-            }
-
-            return dataFormatada.toLocaleString(
-                "pt-BR"
-            );
-
-        }
-
-
-        function encontrarProduto(nome) {
-
-            if (!nome) {
-
-                return null;
-
-            }
-
-            const nomeNormalizado =
-                String(nome)
-                    .trim()
-                    .toLowerCase();
-
-            return produtos.find(
-                function (produto) {
-
-                    return String(
-                        produto.nome || ""
-                    )
-                        .trim()
-                        .toLowerCase()
-                        === nomeNormalizado;
-
-                }
-            ) || null;
-
-        }
-
+        /* =========================
+           SESSÃO
+        ========================= */
 
         async function verificarSessao() {
 
-            const {
-                data,
-                error
-            } = await supabaseClient.auth.getSession();
+            try {
 
+                const {
+                    data: {
+                        session
+                    }
+                } = await supabaseClient.auth.getSession();
 
-            if (error) {
+                if (!session) {
 
-                console.error(
-                    "Erro ao verificar sessão:",
-                    error
-                );
+                    window.location.href = "../admin/login.html";
 
-                window.location.href =
-                    "../admin/login.html";
+                    return false;
 
-                return false;
+                }
 
-            }
+                return true;
 
+            } catch (erro) {
 
-            if (!data.session) {
+                console.error(erro);
 
-                window.location.href =
-                    "../admin/login.html";
+                window.location.href = "../admin/login.html";
 
                 return false;
 
             }
-
-
-            return true;
 
         }
 
 
+        /* =========================
+           PRODUTOS
+        ========================= */
+
         async function carregarProdutos() {
+
+            const tabela =
+                document.getElementById("tabelaProdutos");
+
+            tabela.innerHTML = `
+                <tr>
+                    <td colspan="5" class="sem-registros">
+                        Carregando produtos...
+                    </td>
+                </tr>
+            `;
 
             const {
                 data,
@@ -405,12 +721,9 @@
             } = await supabaseClient
                 .from("produtos")
                 .select("*")
-                .order(
-                    "criado_em",
-                    {
-                        ascending: false
-                    }
-                );
+                .order("criado_em", {
+                    ascending: false
+                });
 
 
             if (error) {
@@ -420,81 +733,110 @@
                     error
                 );
 
-                throw error;
+                tabela.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="sem-registros">
+                            Erro ao carregar produtos.
+                        </td>
+                    </tr>
+                `;
+
+                mostrarMensagem(
+                    "Não foi possível carregar os produtos.",
+                    "erro"
+                );
+
+                return;
 
             }
 
 
             produtos = data || [];
 
-        }
+            document.getElementById(
+                "totalProdutos"
+            ).textContent = produtos.length;
 
 
-        async function carregarPedidos() {
+            if (!produtos.length) {
 
-            const {
-                data,
-                error
-            } = await supabaseClient
-                .from("pedidos")
-                .select("*")
-                .order(
-                    "criado_em",
-                    {
-                        ascending: false
-                    }
-                );
+                tabela.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="sem-registros">
+                            Nenhum produto cadastrado.
+                        </td>
+                    </tr>
+                `;
 
-
-            if (error) {
-
-                console.error(
-                    "Erro ao carregar pedidos:",
-                    error
-                );
-
-                throw error;
+                return;
 
             }
 
 
-            pedidos = data || [];
+            tabela.innerHTML = produtos
+                .map(produto => {
 
-            atualizarResumo();
-
-            renderizarPedidos();
-
-        }
-
-
-        function atualizarResumo() {
-
-            const novos =
-                pedidos.filter(
-                    function (pedido) {
-
-                        return pedido.status === "Novo";
-
-                    }
-                ).length;
+                    const preco = Number(
+                        produto.preco || 0
+                    ).toLocaleString(
+                        "pt-BR",
+                        {
+                            style: "currency",
+                            currency: "BRL"
+                        }
+                    );
 
 
-            const andamento =
-                pedidos.filter(
-                    function (pedido) {
+                    const data = produto.criado_em
+                        ? new Date(
+                            produto.criado_em
+                        ).toLocaleDateString(
+                            "pt-BR"
+                        )
+                        : "-";
 
-                        return pedido.status === "Em andamento";
 
-                    }
-                ).length;
+                    return `
+                        <tr>
 
+                            <td>
+                                <strong>
+                                    ${escaparHTML(
+                                        produto.nome || "-"
+                                    )}
+                                </strong>
+                            </td>
 
-            const concluidos =
-                pedidos.filter(
-                    function (pedido) {
+                            <td>
+                                ${escaparHTML(
+                                    produto.categoria || "-"
+                                )}
+                            </td>
 
-                        return pedido.status === "Concluído";
+                            <td>
+                                ${preco}
+                            </td>
 
+                            <td class="data-registro">
+                                ${data}
+                            </td>
+
+                            <td>
+
+                                <div class="acoes-produto">
+
+                                    <button
+                                        type="button"
+                                        class="botao-status"
+                                        onclick="editarProduto('${produto.id}')"
+                                    >
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="botao-status botao-excluir"
+                                        onclick="excluirProduto('${produto.id}')"
                     }
                 ).length;
 
