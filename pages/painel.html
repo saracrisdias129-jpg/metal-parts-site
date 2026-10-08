@@ -94,8 +94,6 @@
             color: #111;
         }
 
-        /* MENU */
-
         .admin-menu {
             display: flex;
             flex-direction: column;
@@ -152,8 +150,6 @@
             color: #777;
         }
 
-        /* CONTEÚDO */
-
         .conteudo-menu {
             display: none;
             background: #fff;
@@ -180,8 +176,6 @@
             color: #666;
         }
 
-        /* RESUMO */
-
         .resumo {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -206,8 +200,6 @@
         .resumo-card strong {
             font-size: 27px;
         }
-
-        /* PRODUTOS */
 
         .produto-form {
             display: grid;
@@ -235,8 +227,6 @@
             border-radius: 7px;
             font-family: inherit;
         }
-
-        /* TABELA */
 
         .tabela {
             width: 100%;
@@ -349,8 +339,6 @@
 
 <div class="admin-container">
 
-    <!-- CABEÇALHO -->
-
     <div class="admin-topo">
 
         <div>
@@ -384,13 +372,8 @@
     </div>
 
 
-    <div
-        id="mensagem"
-        class="mensagem"
-    ></div>
+    <div id="mensagem" class="mensagem"></div>
 
-
-    <!-- MENU -->
 
     <div class="admin-menu">
 
@@ -404,9 +387,7 @@
 
             <div class="menu-esquerda">
 
-                <div class="menu-icone">
-                    🔧
-                </div>
+                <div class="menu-icone">🔧</div>
 
                 <div class="menu-texto">
 
@@ -420,17 +401,12 @@
 
             </div>
 
-            <span class="seta">
-                ▼
-            </span>
+            <span class="seta">▼</span>
 
         </button>
 
 
-        <div
-            id="produtos"
-            class="conteudo-menu"
-        >
+        <div id="produtos" class="conteudo-menu">
 
             <div class="secao-titulo">
 
@@ -443,10 +419,7 @@
             </div>
 
 
-            <form
-                id="formProduto"
-                class="produto-form"
-            >
+            <form id="formProduto" class="produto-form">
 
                 <div class="campo">
 
@@ -496,6 +469,473 @@
                     >
 
                 </div>
+
+
+                <div class="acoes">
+
+                    <button
+                        id="btnSalvar"
+                        type="submit"
+                        class="admin-btn btn-amarelo"
+                    >
+                        Adicionar produto
+                    </button>
+
+                    <button
+                        id="btnCancelar"
+                        type="button"
+                        class="admin-btn btn-cinza"
+                        style="display:none;"
+                        onclick="cancelarEdicao()"
+                    >
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="tabela">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaProdutos">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="vazio"
+                            >
+                                Clique em Atualizar para carregar os produtos.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- PEDIDOS -->
+
+        <button
+            type="button"
+            class="menu-botao"
+            onclick="abrirMenu('pedidos')"
+        >
+
+            <div class="menu-esquerda">
+
+                <div class="menu-icone">📦</div>
+
+                <div class="menu-texto">
+
+                    <h2>Pedidos recebidos</h2>
+
+                    <p>
+                        Visualizar e administrar pedidos
+                    </p>
+
+                </div>
+
+            </div>
+
+            <span class="seta">▼</span>
+
+        </button>
+
+
+        <div id="pedidos" class="conteudo-menu">
+
+            <div class="secao-titulo">
+
+                <h2>Pedidos recebidos</h2>
+
+                <p>
+                    Pedidos realizados pelos clientes.
+                </p>
+
+            </div>
+
+
+            <div class="tabela">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Peça</th>
+                            <th>Qtd.</th>
+                            <th>Observações</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaPedidos">
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="vazio"
+                            >
+                                Clique em Atualizar para carregar os pedidos.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESUMO -->
+
+        <button
+            type="button"
+            class="menu-botao"
+            onclick="abrirMenu('resumo')"
+        >
+
+            <div class="menu-esquerda">
+
+                <div class="menu-icone">📊</div>
+
+                <div class="menu-texto">
+
+                    <h2>Resumo</h2>
+
+                    <p>
+                        Visão geral do site e dos pedidos
+                    </p>
+
+                </div>
+
+            </div>
+
+            <span class="seta">▼</span>
+
+        </button>
+
+
+        <div id="resumo" class="conteudo-menu">
+
+            <div class="secao-titulo">
+
+                <h2>Resumo</h2>
+
+                <p>
+                    Situação atual da Metal Parts.
+                </p>
+
+            </div>
+
+
+            <div class="resumo">
+
+                <div class="resumo-card">
+
+                    <span>Produtos cadastrados</span>
+
+                    <strong id="totalProdutos">0</strong>
+
+                </div>
+
+
+                <div class="resumo-card">
+
+                    <span>Total de pedidos</span>
+
+                    <strong id="totalPedidos">0</strong>
+
+                </div>
+
+
+                <div class="resumo-card">
+
+                    <span>Pedidos novos</span>
+
+                    <strong id="pedidosNovos">0</strong>
+
+                </div>
+
+
+                <div class="resumo-card">
+
+                    <span>Concluídos</span>
+
+                    <strong id="pedidosConcluidos">0</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../supabase/config.js"></script>
+
+
+<script>
+
+    let produtos = [];
+    let pedidos = [];
+    let produtoEditando = null;
+
+
+    /* =========================
+       MENU
+    ========================= */
+
+    function abrirMenu(id) {
+
+        const menus =
+            document.querySelectorAll(".conteudo-menu");
+
+        menus.forEach(function(menu) {
+
+            if (menu.id === id) {
+
+                menu.classList.toggle("aberto");
+
+            } else {
+
+                menu.classList.remove("aberto");
+
+            }
+
+        });
+
+
+        if (id === "produtos") {
+            carregarProdutos();
+        }
+
+        if (id === "pedidos") {
+            carregarPedidos();
+        }
+
+        if (id === "resumo") {
+            carregarTudo();
+        }
+
+    }
+
+
+    /* =========================
+       MENSAGEM
+    ========================= */
+
+    function mostrarMensagem(texto, erro = false) {
+
+        const elemento =
+            document.getElementById("mensagem");
+
+        elemento.textContent = texto;
+
+        elemento.className =
+            erro
+                ? "mensagem erro"
+                : "mensagem ok";
+
+        setTimeout(function() {
+
+            elemento.className = "mensagem";
+            elemento.textContent = "";
+
+        }, 3500);
+
+    }
+
+
+    /* =========================
+       ESCAPAR TEXTO
+    ========================= */
+
+    function escapar(valor) {
+
+        return String(valor ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================
+       PRODUTOS
+    ========================= */
+
+    async function carregarProdutos() {
+
+        const tabela =
+            document.getElementById("listaProdutos");
+
+        tabela.innerHTML = `
+            <tr>
+                <td colspan="5" class="vazio">
+                    Carregando produtos...
+                </td>
+            </tr>
+        `;
+
+
+        try {
+
+            const resposta =
+                await supabaseClient
+                    .from("produtos")
+                    .select("*")
+                    .order("criado_em", {
+                        ascending: false
+                    });
+
+
+            if (resposta.error) {
+                throw resposta.error;
+            }
+
+
+            produtos = resposta.data || [];
+
+
+            document.getElementById(
+                "totalProdutos"
+            ).textContent = produtos.length;
+
+
+            if (produtos.length === 0) {
+
+                tabela.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="vazio">
+                            Nenhum produto cadastrado.
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            tabela.innerHTML =
+                produtos.map(function(produto) {
+
+                    const preco =
+                        Number(produto.preco || 0)
+                            .toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL"
+                            });
+
+
+                    const data =
+                        produto.criado_em
+                            ? new Date(
+                                produto.criado_em
+                            ).toLocaleDateString("pt-BR")
+                            : "-";
+
+
+                    return `
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    ${escapar(produto.nome)}
+                                </strong>
+                            </td>
+
+                            <td>
+                                ${escapar(produto.categoria)}
+                            </td>
+
+                            <td>
+                                ${preco}
+                            </td>
+
+                            <td>
+                                ${data}
+                            </td>
+
+                            <td>
+
+                                <div class="acoes">
+
+                                    <button
+                                        type="button"
+                                        class="admin-btn btn-amarelo"
+                                        onclick="editarProduto('${produto.id}')"
+                                    >
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="admin-btn btn-vermelho"
+                                        onclick="excluirProduto('${produto.id}')"
+                                    >
+                                        Excluir
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    `;
+
+                }).join("");
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            tabela.innerHTML = `
+                <tr>
+                    <td colspan="5" class="vazio">
+                        Erro ao carregar produtos.
+   v>
 
 
                 <div class="acoes">
