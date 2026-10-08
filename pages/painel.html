@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Painel | Metal Parts</title>
+    <title>Painel Administrativo | Metal Parts</title>
 
     <link rel="stylesheet" href="../style.css">
 
@@ -32,176 +32,254 @@
 
         body {
             margin: 0;
+            background: #f5f5f5;
+            font-family: "Inter", Arial, sans-serif;
+            color: #111;
         }
 
-        .admin-container {
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        .painel {
             width: 100%;
             max-width: 1200px;
-            margin: auto;
-            padding: 40px 20px 80px;
+            margin: 0 auto;
+            padding: 30px 18px 70px;
         }
 
-        .admin-topo {
+        /* =========================
+           TOPO
+        ========================= */
+
+        .topo {
+            background: #111;
+            color: #fff;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 18px;
+
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             gap: 20px;
             flex-wrap: wrap;
-            margin-bottom: 30px;
         }
 
-        .admin-topo h1 {
-            margin: 0 0 8px;
+        .topo h1 {
+            margin: 0 0 5px;
+            font-size: 25px;
         }
 
-        .admin-topo p {
+        .topo p {
             margin: 0;
-            color: #666;
+            color: #ccc;
+            font-size: 14px;
         }
 
-        .admin-acoes {
+        .topo-acoes {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
 
-        .admin-btn {
+        .botao {
             border: 0;
             border-radius: 8px;
-            padding: 11px 17px;
+            padding: 11px 16px;
             font-weight: 700;
             cursor: pointer;
-            font-family: inherit;
+            transition: .2s;
         }
 
-        .btn-amarelo {
+        .botao:hover {
+            transform: translateY(-1px);
+        }
+
+        .botao-amarelo {
             background: #f2c300;
             color: #111;
         }
 
-        .btn-preto {
-            background: #111;
-            color: #fff;
+        .botao-branco {
+            background: #fff;
+            color: #111;
         }
 
-        .btn-vermelho {
+        .botao-vermelho {
             background: #c62828;
             color: #fff;
         }
 
-        .btn-cinza {
-            background: #e8e8e8;
+        .botao-cinza {
+            background: #e5e5e5;
             color: #111;
         }
 
-        .admin-menu {
+        /* =========================
+           MENSAGEM
+        ========================= */
+
+        #mensagem {
+            display: none;
+            padding: 13px 16px;
+            border-radius: 9px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        #mensagem.sucesso {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        #mensagem.erro {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* =========================
+           MENU PRINCIPAL
+        ========================= */
+
+        .menu {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .menu-botao {
             width: 100%;
             border: 0;
-            border-radius: 12px;
-            padding: 18px 20px;
             background: #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,.08);
+            border-radius: 12px;
+            padding: 17px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             cursor: pointer;
             text-align: left;
-            font-family: inherit;
+        }
+
+        .menu-botao:hover {
+            box-shadow: 0 5px 16px rgba(0,0,0,.11);
         }
 
         .menu-esquerda {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 13px;
         }
 
-        .menu-icone {
+        .icone {
             width: 45px;
             height: 45px;
             border-radius: 9px;
             background: #f2c300;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 21px;
             flex-shrink: 0;
         }
 
-        .menu-texto h2 {
-            margin: 0 0 4px;
-            font-size: 17px;
-            color: #111;
+        .menu-texto strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 4px;
         }
 
-        .menu-texto p {
-            margin: 0;
+        .menu-texto span {
+            display: block;
+            color: #777;
             font-size: 13px;
-            color: #666;
         }
 
         .seta {
-            font-size: 22px;
+            font-size: 20px;
             color: #777;
+            transition: .2s;
         }
 
-        .conteudo-menu {
+        .menu-botao.ativo .seta {
+            transform: rotate(180deg);
+        }
+
+        /* =========================
+           SEÇÕES
+        ========================= */
+
+        .secao {
             display: none;
             background: #fff;
-            padding: 25px;
-            margin-top: -12px;
             border-radius: 0 0 12px 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,.08);
+            padding: 20px;
+            margin-top: -10px;
+            margin-bottom: 2px;
+            box-shadow: 0 4px 14px rgba(0,0,0,.07);
         }
 
-        .conteudo-menu.aberto {
-            display: block !important;
+        .secao.aberta {
+            display: block;
         }
 
         .secao-titulo {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .secao-titulo h2 {
             margin: 0 0 5px;
+            font-size: 21px;
         }
 
         .secao-titulo p {
             margin: 0;
-            color: #666;
+            color: #777;
+            font-size: 14px;
         }
 
-        .resumo {
+        /* =========================
+           RESUMO
+        ========================= */
+
+        .cards {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 12px;
         }
 
-        .resumo-card {
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
+        .card {
+            border: 1px solid #eee;
             border-left: 5px solid #f2c300;
-            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+            border-radius: 10px;
+            padding: 18px;
         }
 
-        .resumo-card span {
+        .card span {
             display: block;
-            color: #666;
+            color: #777;
             font-size: 13px;
             margin-bottom: 8px;
         }
 
-        .resumo-card strong {
+        .card strong {
             font-size: 27px;
         }
 
-        .produto-form {
+        /* =========================
+           FORMULÁRIO
+        ========================= */
+
+        .formulario {
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr auto;
             gap: 12px;
@@ -223,34 +301,49 @@
         .campo input {
             width: 100%;
             padding: 11px;
-            border: 1px solid #ddd;
+            border: 1px solid #d8d8d8;
             border-radius: 7px;
-            font-family: inherit;
+            outline: none;
         }
 
-        .tabela {
+        .campo input:focus {
+            border-color: #f2c300;
+        }
+
+        .botoes-form {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        /* =========================
+           TABELA
+        ========================= */
+
+        .tabela-container {
             width: 100%;
             overflow-x: auto;
         }
 
         table {
             width: 100%;
+            min-width: 720px;
             border-collapse: collapse;
-            min-width: 700px;
         }
 
         th {
             background: #111;
             color: #fff;
-            padding: 12px;
+            padding: 11px;
             text-align: left;
             font-size: 13px;
         }
 
         td {
-            padding: 12px;
+            padding: 11px;
             border-bottom: 1px solid #eee;
             font-size: 14px;
+            vertical-align: middle;
         }
 
         .acoes {
@@ -259,45 +352,35 @@
             flex-wrap: wrap;
         }
 
+        .acoes .botao {
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+
         .status {
-            padding: 7px;
+            padding: 8px;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 7px;
+            background: #fff;
         }
 
         .vazio {
             text-align: center;
-            padding: 25px;
             color: #777;
+            padding: 25px;
         }
 
-        .mensagem {
-            display: none;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
+        /* =========================
+           MOBILE
+        ========================= */
 
-        .mensagem.ok {
-            display: block;
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
+        @media (max-width: 800px) {
 
-        .mensagem.erro {
-            display: block;
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        @media (max-width: 900px) {
-
-            .resumo {
+            .cards {
                 grid-template-columns: 1fr 1fr;
             }
 
-            .produto-form {
+            .formulario {
                 grid-template-columns: 1fr 1fr;
             }
 
@@ -305,28 +388,40 @@
 
         @media (max-width: 600px) {
 
-            .admin-container {
-                padding: 25px 15px 50px;
+            .painel {
+                padding: 20px 12px 50px;
             }
 
-            .admin-acoes {
+            .topo {
+                padding: 18px;
+            }
+
+            .topo h1 {
+                font-size: 21px;
+            }
+
+            .topo-acoes {
                 width: 100%;
             }
 
-            .admin-acoes button {
+            .topo-acoes .botao {
                 flex: 1;
             }
 
-            .resumo {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .produto-form {
+            .formulario {
                 grid-template-columns: 1fr;
             }
 
-            .menu-texto p {
+            .cards {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .menu-texto span {
                 display: none;
+            }
+
+            .secao {
+                padding: 16px;
             }
 
         }
@@ -337,80 +432,211 @@
 
 <body>
 
-<div class="admin-container">
+<div class="painel">
 
-    <div class="admin-topo">
+    <!-- =========================
+         TOPO
+    ========================== -->
+
+    <header class="topo">
 
         <div>
 
-            <h1>Painel da Metal Parts</h1>
+            <h1>Metal Parts</h1>
 
-            <p>Administração do site</p>
+            <p>Painel administrativo</p>
 
         </div>
 
-        <div class="admin-acoes">
+        <div class="topo-acoes">
 
             <button
                 type="button"
-                class="admin-btn btn-amarelo"
-                onclick="atualizarTudo()"
+                class="botao botao-amarelo"
+                id="botaoAtualizar"
             >
                 ↻ Atualizar
             </button>
 
             <button
                 type="button"
-                class="admin-btn btn-preto"
-                onclick="sair()"
+                class="botao botao-branco"
+                id="botaoSair"
             >
                 Sair
             </button>
 
         </div>
 
-    </div>
+    </header>
 
 
-    <div id="mensagem" class="mensagem"></div>
+    <div id="mensagem"></div>
 
 
-    <div class="admin-menu">
+    <!-- =========================
+         MENU
+    ========================== -->
 
-        <!-- PRODUTOS -->
+    <main class="menu">
+
+
+        <!-- =========================
+             RESUMO
+        ========================== -->
 
         <button
             type="button"
             class="menu-botao"
-            onclick="abrirMenu('produtos')"
+            data-menu="resumo"
         >
 
             <div class="menu-esquerda">
 
-                <div class="menu-icone">🔧</div>
+                <div class="icone">
+                    📊
+                </div>
 
                 <div class="menu-texto">
 
-                    <h2>Gerenciar produtos</h2>
+                    <strong>Resumo</strong>
 
-                    <p>
-                        Adicionar, editar e excluir produtos
-                    </p>
+                    <span>
+                        Visão geral da Metal Parts
+                    </span>
 
                 </div>
 
             </div>
 
-            <span class="seta">▼</span>
+            <div class="seta">
+                ▼
+            </div>
 
         </button>
 
 
-        <div id="produtos" class="conteudo-menu">
+        <section
+            id="resumo"
+            class="secao"
+        >
 
             <div class="secao-titulo">
 
-                <h2>Gerenciar produtos</h2>
+                <h2>Resumo</h2>
+
+                <p>
+                    Informações gerais do sistema.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <span>
+                        Produtos cadastrados
+                    </span>
+
+                    <strong id="totalProdutos">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span>
+                        Total de pedidos
+                    </span>
+
+                    <strong id="totalPedidos">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span>
+                        Pedidos novos
+                    </span>
+
+                    <strong id="pedidosNovos">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span>
+                        Pedidos concluídos
+                    </span>
+
+                    <strong id="pedidosConcluidos">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PRODUTOS
+        ========================== -->
+
+        <button
+            type="button"
+            class="menu-botao"
+            data-menu="produtos"
+        >
+
+            <div class="menu-esquerda">
+
+                <div class="icone">
+                    🔧
+                </div>
+
+                <div class="menu-texto">
+
+                    <strong>
+                        Gerenciar produtos
+                    </strong>
+
+                    <span>
+                        Adicionar, editar e excluir produtos
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="seta">
+                ▼
+            </div>
+
+        </button>
+
+
+        <section
+            id="produtos"
+            class="secao"
+        >
+
+            <div class="secao-titulo">
+
+                <h2>
+                    Gerenciar produtos
+                </h2>
 
                 <p>
                     Cadastre os produtos que aparecerão no catálogo.
@@ -419,7 +645,10 @@
             </div>
 
 
-            <form id="formProduto" class="produto-form">
+            <form
+                id="formProduto"
+                class="formulario"
+            >
 
                 <div class="campo">
 
@@ -428,8 +657,8 @@
                     </label>
 
                     <input
-                        id="nomeProduto"
                         type="text"
+                        id="nomeProduto"
                         placeholder="Ex.: Pastilha de freio"
                         required
                     >
@@ -444,8 +673,8 @@
                     </label>
 
                     <input
-                        id="precoProduto"
                         type="number"
+                        id="precoProduto"
                         min="0"
                         step="0.01"
                         placeholder="0,00"
@@ -462,8 +691,8 @@
                     </label>
 
                     <input
-                        id="categoriaProduto"
                         type="text"
+                        id="categoriaProduto"
                         placeholder="Ex.: Freios"
                         required
                     >
@@ -471,17 +700,276 @@
                 </div>
 
 
-                <div class="acoes">
+                <div class="botoes-form">
 
                     <button
-                        id="btnSalvar"
                         type="submit"
-                        class="admin-btn btn-amarelo"
+                        class="botao botao-amarelo"
+                        id="botaoSalvarProduto"
                     >
-                        Adicionar produto
+                        Adicionar
                     </button>
 
                     <button
+                        type="button"
+                        class="botao botao-cinza"
+                        id="botaoCancelar"
+                        style="display:none;"
+                    >
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Produto
+                            </th>
+
+                            <th>
+                                Categoria
+                            </th>
+
+                            <th>
+                                Preço
+                            </th>
+
+                            <th>
+                                Data
+                            </th>
+
+                            <th>
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaProdutos">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="vazio"
+                            >
+                                Nenhum produto carregado.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PEDIDOS
+        ========================== -->
+
+        <button
+            type="button"
+            class="menu-botao"
+            data-menu="pedidos"
+        >
+
+            <div class="menu-esquerda">
+
+                <div class="icone">
+                    📦
+                </div>
+
+                <div class="menu-texto">
+
+                    <strong>
+                        Pedidos recebidos
+                    </strong>
+
+                    <span>
+                        Visualizar e administrar pedidos
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="seta">
+                ▼
+            </div>
+
+        </button>
+
+
+        <section
+            id="pedidos"
+            class="secao"
+        >
+
+            <div class="secao-titulo">
+
+                <h2>
+                    Pedidos recebidos
+                </h2>
+
+                <p>
+                    Pedidos feitos pelos clientes através do site.
+                </p>
+
+            </div>
+
+
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Cliente
+                            </th>
+
+                            <th>
+                                Telefone
+                            </th>
+
+                            <th>
+                                Peça
+                            </th>
+
+                            <th>
+                                Qtd.
+                            </th>
+
+                            <th>
+                                Observações
+                            </th>
+
+                            <th>
+                                Data
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Ação
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaPedidos">
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="vazio"
+                            >
+                                Nenhum pedido carregado.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../supabase/config.js"></script>
+
+
+<script>
+
+    /* =====================================================
+       VARIÁVEIS
+    ===================================================== */
+
+    let produtos = [];
+    let pedidos = [];
+    let produtoEditando = null;
+
+
+    /* =====================================================
+       ELEMENTOS
+    ===================================================== */
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+    const listaProdutos =
+        document.getElementById("listaProdutos");
+
+    const listaPedidos =
+        document.getElementById("listaPedidos");
+
+
+    /* =====================================================
+       MENSAGEM
+    ===================================================== */
+
+    function mostrarMensagem(texto, tipo = "sucesso") {
+
+        mensagem.textContent = texto;
+
+        mensagem.className = tipo;
+
+        setTimeout(function() {
+
+            mensagem.textContent = "";
+            mensagem.className = "";
+
+        }, 3500);
+
+    }
+
+
+    /* =====================================================
+       MENU
+    ===================================================== */
+
+    document
+        .querySelectorAll(".menu-botao")
+        .forEach(function(botao) {
+
+            botao.addEventListener("click", function() {
+
+                const id =
+                    botao.dataset.menu;
+
+                const secao =
+                 n
                         id="btnCancelar"
                         type="button"
                         class="admin-btn btn-cinza"
